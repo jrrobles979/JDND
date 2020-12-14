@@ -49,6 +49,8 @@ public class Car {
     @Transient
     private String price;
 
+
+
     public Long getId() {
         return id;
     }
