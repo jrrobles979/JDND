@@ -138,7 +138,7 @@ public class CarControllerTest {
         MvcResult result = mvc.perform(
                 get(new URI("/cars")))
                 .andExpect(jsonPath("$._embedded.carList", hasSize(1))).andReturn();
-        ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);;;
+        ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         JsonNode rootNode = objectMapper.readTree(result.getResponse().getContentAsString());
         JsonNode carListNode = rootNode.get("_embedded").get("carList");
         Car carResponse = objectMapper.readValue( carListNode.get(0).toString() , Car.class);

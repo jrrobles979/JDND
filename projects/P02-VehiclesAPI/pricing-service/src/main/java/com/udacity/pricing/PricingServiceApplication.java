@@ -19,23 +19,23 @@ import java.util.List;
  * TODO: Convert the application from a REST API to a microservice.
  */
 @SpringBootApplication
-//@EnableEurekaClient
+@EnableEurekaClient
 public class PricingServiceApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(PricingServiceApplication.class, args);
     }
 
-    @RestController
+  /*  @RestController
     class ServiceInstanceRestController {
-
         @Autowired
         private DiscoveryClient discoveryClient;
 
-      /*  @RequestMapping("/service-instances/{applicationName}")
+        @RequestMapping("/service-instances/{applicationName}")
         public List<ServiceInstance> serviceInstancesByApplicationName(
                 @PathVariable String applicationName) {
             return this.discoveryClient.getInstances(applicationName);
-        }*/
-    }
+        }
+
+    } */
 }
