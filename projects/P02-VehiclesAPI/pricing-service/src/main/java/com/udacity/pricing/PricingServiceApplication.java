@@ -1,5 +1,6 @@
 package com.udacity.pricing;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,16 +26,16 @@ public class PricingServiceApplication {
         SpringApplication.run(PricingServiceApplication.class, args);
     }
 
-   /* @RestController
+    @RestController
     class ServiceInstanceRestController {
 
         @Autowired
         private DiscoveryClient discoveryClient;
 
-        @RequestMapping("/service-instances/{applicationName}")
+      /*  @RequestMapping("/service-instances/{applicationName}")
         public List<ServiceInstance> serviceInstancesByApplicationName(
                 @PathVariable String applicationName) {
             return this.discoveryClient.getInstances(applicationName);
-        }
-    } */
+        }*/
+    }
 }
