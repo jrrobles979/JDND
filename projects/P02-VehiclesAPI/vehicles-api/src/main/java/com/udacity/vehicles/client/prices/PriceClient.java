@@ -12,6 +12,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class PriceClient {
 
     private static final Logger log = LoggerFactory.getLogger(PriceClient.class);
+    private static final String host="localhost";
+    private static final int port=8762;
 
     private final WebClient client;
 
@@ -35,7 +37,9 @@ public class PriceClient {
             Price price = client
                     .get()
                     .uri(uriBuilder -> uriBuilder
-                            .path("services/price/")
+                            .host(host)
+                            .port(port)
+                            .path("/services/price/")
                             .queryParam("vehicleId", vehicleId)
                             .build()
                     )

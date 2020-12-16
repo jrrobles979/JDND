@@ -8,6 +8,7 @@ import com.udacity.pricing.service.PricingService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -31,7 +32,7 @@ public class PriceControllerUnitTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Mock
     PricingService pricingService;
 
 
@@ -40,7 +41,7 @@ public class PriceControllerUnitTest {
 
         MvcResult result = mockMvc.perform(get("/services/price?vehicleId="+defaultVehicleId))
                 .andExpect(status().isOk()).andReturn();
-        verify(pricingService, times(1)).getPrice(defaultVehicleId);
+         verify(pricingService, times(1)).getPrice(defaultVehicleId);
 
     }
 

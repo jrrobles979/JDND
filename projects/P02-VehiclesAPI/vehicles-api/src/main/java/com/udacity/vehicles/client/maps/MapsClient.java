@@ -15,6 +15,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class MapsClient {
 
     private static final Logger log = LoggerFactory.getLogger(MapsClient.class);
+    private static final String host="localhost";
+    private static final int port=9191;
 
     private final WebClient client;
     private final ModelMapper mapper;
@@ -36,6 +38,8 @@ public class MapsClient {
             Address address = client
                     .get()
                     .uri(uriBuilder -> uriBuilder
+                            .host(host)
+                            .port(port)
                             .path("/maps/")
                             .queryParam("lat", location.getLat())
                             .queryParam("lon", location.getLon())
