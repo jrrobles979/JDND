@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
@@ -40,13 +41,15 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value="Cars", tags = {"Cars Resource"})
 class CarController {
 
-    private final CarService carService;
-    private final CarResourceAssembler assembler;
+    @Autowired
+    private CarService carService;
+    @Autowired
+    private CarResourceAssembler assembler;
 
-    CarController(CarService carService, CarResourceAssembler assembler) {
+   /* CarController(CarService carService, CarResourceAssembler assembler) {
         this.carService = carService;
         this.assembler = assembler;
-    }
+    }*/
 
     /**
      * Creates a list to store any vehicles.
@@ -120,7 +123,8 @@ class CarController {
          *   Update the first line as part of the above implementing.
          */
         car.setId(id);
-        Car carUpdated = carService.save(car);
+        Car carUpdated =
+                carService.save(car);
         /*if (carUpdated == null )
         {
             //throw car not updated /not found

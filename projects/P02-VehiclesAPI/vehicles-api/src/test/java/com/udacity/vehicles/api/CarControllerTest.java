@@ -22,6 +22,7 @@ import com.udacity.vehicles.service.CarService;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 
 
 import org.json.JSONObject;
@@ -29,6 +30,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,28 +99,63 @@ public class CarControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isCreated());
+
+    }
+
+
+    /**
+     * Tests for update car in the system using MockMvc
+     *
+     * @throws Exception when car creation fails in the system
+     */
+    @Test
+    public void updateCarUsingMockMvc() throws Exception {
+
+          /* Car car = getCar();
+        MvcResult result = mvc.perform(
+                post(new URI("/cars"))
+                        .content(json.write(car).getJson())
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isCreated()).andReturn();
+        ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        Car carResponse = objectMapper.readValue(result.getResponse().getContentAsString(), Car.class);*/
+
+        Car car = getCar();
+
+        LocalDateTime createdAt = LocalDateTime.now();
+        LocalDateTime modifiedAt = createdAt.plusHours(1);
+        car.setCreatedAt(createdAt);
+        car.setModifiedAt(modifiedAt);
+        car.getDetails().setExternalColor("red");
+
+        mvc.perform(
+                put("/cars/{id}", 1l)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json.write(car).getJson())
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.details.externalColor", is("red")));
     }
 
     /**
-     * Tests for update car in the system
+     * Tests for update car in the system using CarService directly
      *
      * @throws Exception when car creation fails in the system
      */
     @Test
     public void updateCar() throws Exception {
-        Car car = getCar();
 
-        //car.setCreatedAt(LocalDateTime.now());
-        //car.setModifiedAt(LocalDateTime.now());
-        car.getDetails().setExternalColor("red");
-        MvcResult result = mvc.perform(put("/cars/{id}", 1L)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json.write(car).getJson())
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .accept(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.details.externalColor", is("red"))).andReturn();
-        System.out.println(result.getResponse().getContentAsString());
+       Car carResponse = carService.findById(defaultCarId);
+        LocalDateTime createdAt = LocalDateTime.now();
+        LocalDateTime modifiedAt = createdAt.plusHours(1);
+        carResponse.setCreatedAt(createdAt);
+        carResponse.setModifiedAt(modifiedAt);
+        carResponse.getDetails().setExternalColor("red");
+        Car carUpdated = carService.save(carResponse);
+        Assert.assertEquals(carResponse, carUpdated);
+
     }
 
     /**
