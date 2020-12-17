@@ -123,13 +123,8 @@ class CarController {
          *   Update the first line as part of the above implementing.
          */
         car.setId(id);
-        Car carUpdated =
-                carService.save(car);
-        /*if (carUpdated == null )
-        {
-            //throw car not updated /not found
-        } */
-        Resource<Car> resource = assembler.toResource(carUpdated);
+        carService.save(car);
+        Resource<Car> resource = assembler.toResource(car);
         return ResponseEntity.ok(resource);
     }
 
